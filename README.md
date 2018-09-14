@@ -98,3 +98,19 @@ Remove the server URL:
 $ redis-cli
 127.0.0.1:6379> hdel mdthk:vlb:servers srv5
 ```
+
+## Get server hit counters
+```
+$ redis-cli
+127.0.0.1:6379> zrange mdthk:vlb:hits 0 -1 withscores
+ 1) "srv3"
+ 2) "2"
+ 3) "srv2"
+ 4) "3"
+ 5) "srv1"
+ 6) "4"
+ 7) "srv4"
+ 8) "4"
+ 9) "srv5"
+10) "4"
+```

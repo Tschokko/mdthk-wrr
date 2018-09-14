@@ -75,8 +75,13 @@ local function wrr()
         end
         if server_weights[i] >= cw then
             if client:hexists("mdthk:vlb:servers", server_keys[i]) then
+                -- Save the current index and weight for next request
                 client:set("mdthk:vlb:cindex", i)
                 client:set("mdthk:vlb:cweight", cw)
+
+                -- Increment hits counter for selected server
+                client:zincrby("mdthk:vlb:hits", 1, server_keys[i])
+
                 return client:hget("mdthk:vlb:servers", server_keys[i])
             end
         end
