@@ -99,4 +99,4 @@ if redirect_url == nil then
     return ngx.exit(404)
 end
 
-ngx.redirect(redirect_url, 302)
+ngx.redirect(redirect_url .. ngx.var.request_uri, 302)

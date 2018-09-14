@@ -23,7 +23,7 @@ lua_socket_read_timeout 10ms;
 
 server {
         ...
-        location /Filmliste-akt.xz {
+        location / {
                 access_by_lua_file /var/www/srv1/mvlb.lua;
         }
         ...
@@ -34,9 +34,12 @@ server {
 
 ### Add new server
 Add server URL
+
+NOTE: Do not add a trailing slash to the URL! 
+
 ```
 $ redis-cli
-127.0.0.1:6379> hset mdthk:vlb:servers srv5 "http://verteiler5.mediathekview.de/Filmliste-akt.xz"
+127.0.0.1:6379> hset mdthk:vlb:servers srv5 "http://verteiler5.mediathekview.de"
 ```
 NOTE: srv5 is the key and must be unique
 
@@ -52,15 +55,15 @@ URLs:
 $ redis-cli
 127.0.0.1:6379> hgetall mdthk:vlb:servers
  1) "srv1"
- 2) "http://verteiler1.mediathekview.de/Filmliste-akt.xz"
+ 2) "http://verteiler1.mediathekview.de"
  3) "srv2"
- 4) "http://verteiler2.mediathekview.de/Filmliste-akt.xz"
+ 4) "http://verteiler2.mediathekview.de"
  5) "srv3"
- 6) "http://verteiler3.mediathekview.de/Filmliste-akt.xz"
+ 6) "http://verteiler3.mediathekview.de"
  7) "srv4"
- 8) "http://verteiler4.mediathekview.de/Filmliste-akt.xz"
+ 8) "http://verteiler4.mediathekview.de"
  9) "srv5"
-10) "http://verteiler5.mediathekview.de/Filmliste-akt.xz"
+10) "http://verteiler5.mediathekview.de"
 ```
 
 Weights:
