@@ -10,6 +10,11 @@ apt install redis-server
 ```
 
 ## NGINX configuration
+
+Copy the mvlb.lua script from GitHub repo to a /var/www/ sub directory.
+
+Configure NGINX site configuration (e.g. /etc/nginx/sites-enabled/default)
+
 ```
 lua_package_path "/usr/share/lua/5.1/nginx/?.lua;;";
 lua_socket_pool_size 100;
@@ -61,7 +66,6 @@ $ redis-cli
 Weights:
 ```
 $ redis-cli
-zrange mdthk:vlb:weights 0 -1 withscores
 127.0.0.1:6379> zrange mdthk:vlb:weights 0 -1 withscores
  1) "srv2"
  2) "2"
@@ -73,4 +77,21 @@ zrange mdthk:vlb:weights 0 -1 withscores
  8) "4"
  9) "srv5"
 10) "4"
+```
+
+## Remove a server
+
+NOTE: To disable a server temporary, it's enough to remove the corresponding 
+weights entry as shown below. Later you can add the entry again.
+
+Remove server weight entry:
+```
+$ redis-cli
+127.0.0.1:6379> zrem mdthk:vlb:weights srv5
+```
+
+Remove the server URL:
+```
+$ redis-cli
+127.0.0.1:6379> hdel mdthk:vlb:servers srv5
 ```
